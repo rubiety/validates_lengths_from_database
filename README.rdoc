@@ -1,0 +1,36 @@
+== Validates Lengths from Database
+
+Few people add length validations to fields in their database, and when saving such fields that have exhausted their length, an SQL error occurs.
+This gem introspects your table schema for maximum lengths on string fields and automatically adds length validations to the model.
+
+== In Progress
+
+NOTE: This gem is not quite ready for use.  It will be released as a gem to rubygems.org once stable.
+
+== Installation
+
+This gem is testing working with Rails 3.0 only!
+
+Include the gem using bundler in your Gemfile:
+
+  gem "validates_lengths_from_database"
+
+== Usage
+
+In your model you can activate validations:
+
+  class Post < ActiveRecord::Base
+    validates_lengths_from_database
+  end
+
+It also supports filter-style :only and :except options:
+
+  class Post < ActiveRecord::Base
+    validates_lengths_from_database :only => [:title, :contents]
+  end
+
+  class Post < ActiveRecord::Base
+    validates_lengths_from_database :except => [:other_field]
+  end
+
+Note that this cannot be done at a global level directly against ActiveRecord::Base, since the +validates_length_from_database+ method requires the class to have a table name (with the ability to load the schema).
