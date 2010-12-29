@@ -1,11 +1,7 @@
 == Validates Lengths from Database
 
 Few people add length validations to fields in their database, and when saving such fields that have exhausted their length, an SQL error occurs.
-This gem introspects your table schema for maximum lengths on string fields and automatically adds length validations to the model.
-
-== In Progress
-
-NOTE: This gem is not quite ready for use.  It will be released as a gem to rubygems.org once stable.
+This gem introspects your table schema for maximum lengths on string and text fields and automatically adds length validations to the model.
 
 == Installation
 

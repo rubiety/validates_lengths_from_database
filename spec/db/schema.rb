@@ -1,14 +1,11 @@
 ActiveRecord::Schema.define(:version => 0) do
   
-  [:articles, :article_drafts].each do |table_name|
-    create_table table_name, :force => true do |t|
-      t.references :article if table_name == :article_drafts
-      
-      t.string :title
-      t.text :summary
-      t.text :body
-      t.date :post_date
-    end
+  create_table :articles, :force => true do |t|
+    t.string :string_1, :limit => 5
+    t.string :string_2, :limit => 5
+    t.text :text_1, :limit => 5
+    t.date :date_1
+    t.integer :integer_1
   end
   
 end

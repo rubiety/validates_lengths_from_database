@@ -16,10 +16,5 @@ load(File.dirname(__FILE__) + "/db/schema.rb")
 
 require File.dirname(__FILE__) + '/../init'
 
-# Example has_draft Model:
-class Article < ActiveRecord::Base
-  validates_lengths_from_database
-end
-
 # Load Factories:
 Dir[File.join(File.dirname(__FILE__), "factories/**/*.rb")].each {|f| require f}
