@@ -5,8 +5,6 @@ This gem introspects your table schema for maximum lengths on string and text fi
 
 == Installation
 
-This gem is testing working with Rails 3.0 only!
-
 Include the gem using bundler in your Gemfile:
 
   gem "validates_lengths_from_database"
