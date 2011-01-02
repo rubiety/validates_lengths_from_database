@@ -2,7 +2,10 @@ require "rubygems"
 require "active_record"
 
 module ValidatesLengthsFromDatabase
-  extend ActiveSupport::Concern
+  def self.included(base)
+    base.send(:extend, ClassMethods)
+    base.send(:include, InstanceMethods)
+  end
 
   module ClassMethods
     def validates_lengths_from_database(options = {})

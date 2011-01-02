@@ -66,7 +66,7 @@ describe ValidatesLengthsFromDatabase do
 
       it "should have errors on only string_1 and text_1" do
         @article.errors["string_1"].join.should =~ /too long/
-        @article.errors["string_2"].should be_empty
+        (@article.errors["string_2"] || []).should be_empty
         @article.errors["text_1"].join.should =~ /too long/
       end
     end
@@ -96,8 +96,8 @@ describe ValidatesLengthsFromDatabase do
       end
 
       it "should have errors on columns other than string_1 and text_1 only" do
-        @article.errors["string_1"].should be_empty
-        @article.errors["text_1"].should be_empty
+        (@article.errors["string_1"] || []).should be_empty
+        (@article.errors["text_1"] || []).should be_empty
         @article.errors["string_2"].join.should =~ /too long/
       end
     end
