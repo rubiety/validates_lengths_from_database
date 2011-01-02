@@ -28,7 +28,7 @@ module ValidatesLengthsFromDatabase
         next if column_schema.limit.nil?
 
         class_eval do
-          validates_length_of column, :maximum => column_schema.limit
+          validates_length_of column, :maximum => column_schema.limit, :allow_blank => true
         end
       end
 
