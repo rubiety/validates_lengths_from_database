@@ -18,6 +18,17 @@ describe ValidatesLengthsFromDatabase do
     :integer_1 => 123
   }
 
+  context "Model without associated table" do
+    specify "defining validates_lengths_from_database should not raise an error" do
+      lambda {
+        class InvalidTableArticle < ActiveRecord::Base
+          set_table_name "articles_invalid"
+          validates_lengths_from_database
+        end
+      }.should_not raise_error
+    end
+  end
+
   context "Model with validates_lengths_from_database" do
     before do
       class ArticleValidateAll < ActiveRecord::Base
