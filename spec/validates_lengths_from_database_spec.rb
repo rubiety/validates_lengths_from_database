@@ -3,19 +3,19 @@ require "spec_helper"
 describe ValidatesLengthsFromDatabase do
 
   LONG_ATTRIBUTES = {
-    :string_1 => "123456789",
-    :string_2 => "123456789",
-    :text_1 => "123456789",
-    :date_1 => Date.today,
-    :integer_1 => 123
+      :string_1 => "123456789",
+      :string_2 => "123456789",
+      :text_1 => "123456789",
+      :date_1 => Date.today,
+      :integer_1 => 123
   }
 
   SHORT_ATTRIBUTES = {
-    :string_1 => "12",
-    :string_2 => "12",
-    :text_1 => "12",
-    :date_1 => Date.today,
-    :integer_1 => 123
+      :string_1 => "12",
+      :string_2 => "12",
+      :text_1 => "12",
+      :date_1 => Date.today,
+      :integer_1 => 123
   }
 
   context "Model without associated table" do
@@ -59,7 +59,7 @@ describe ValidatesLengthsFromDatabase do
       end
     end
   end
-  
+
   context "Model with validates_lengths_from_database :only => [:string_1, :text_1]" do
     before do
       class ArticleValidateOnly < ActiveRecord::Base
@@ -120,6 +120,35 @@ describe ValidatesLengthsFromDatabase do
         @article.should be_valid
       end
     end
+
+    context "limit options" do
+      before do
+        class ArticleValidateLimitShort < ActiveRecord::Base
+          set_table_name "articles"
+          validates_lengths_from_database :limit => {:string => 2, :text => 5}
+        end
+
+        class ArticleValidateLimitLong < ActiveRecord::Base
+          set_table_name "articles"
+          validates_lengths_from_database :limit => {:string => 20, :text => 50}
+        end
+      end
+
+      it "should not be valid" do
+        @article = ArticleValidateLimitShort.new(LONG_ATTRIBUTES)
+        @article.should_not be_valid
+        @article.errors[:string_1].should_not be_empty
+        @article.errors[:text_1].should_not be_empty
+      end
+
+      it "should  be valid" do
+        @article = ArticleValidateLimitLong.new(LONG_ATTRIBUTES)
+        @article.should be_valid
+        @article.errors[:string_1].should be_empty
+        @article.errors[:text_1].should be_empty
+      end
+
+    end
   end
-  
+
 end

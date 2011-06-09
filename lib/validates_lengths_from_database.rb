@@ -25,12 +25,13 @@ module ValidatesLengthsFromDatabase
 
       columns_to_validate.each do |column|
         column_schema = columns.find {|c| c.name == column }
+        column_limit = options[:limit].try(:[], column_schema.type) || column_schema.limit
         next if column_schema.nil?
         next if ![:string, :text].include?(column_schema.type)
-        next if column_schema.limit.nil?
+        next if column_limit.nil?
 
         class_eval do
-          validates_length_of column, :maximum => column_schema.limit, :allow_blank => true
+          validates_length_of column, :maximum => column_limit, :allow_blank => true
         end
       end
 
