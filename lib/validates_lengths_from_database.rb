@@ -12,9 +12,8 @@ module ValidatesLengthsFromDatabase
       options.symbolize_keys!
 
       return false unless self.table_exists?
-
-      raise ArgumentError, "The :only option to validates_lengths_from_database must be an array." if options[:only] and !options[:only].is_a?(Array)
-      raise ArgumentError, "The :except option to validates_lengths_from_database must be an array." if options[:except] and !options[:except].is_a?(Array)
+      options[:only]    = Array[options[:only]]   if options[:only] && !options[:only].is_a?(Array)
+      options[:except]  = Array[options[:except]] if options[:except] && !options[:except].is_a?(Array)
 
       if options[:only]
         columns_to_validate = options[:only].map(&:to_s)
