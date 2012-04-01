@@ -1,6 +1,7 @@
 *.sqlite3
 *.sqlite
 *.log
+*.gem
 Manifest
 pkg
 .bundle
