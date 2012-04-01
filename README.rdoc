@@ -7,7 +7,7 @@ This gem introspects your table schema for maximum lengths on string and text fi
 
 Include the gem using bundler in your Gemfile:
 
-  gem "validates_lengths_from_database"
+  gem "validates_lengths_from_database_advanced"
 
 == Usage
 
@@ -26,5 +26,12 @@ It also supports filter-style :only and :except options:
   class Post < ActiveRecord::Base
     validates_lengths_from_database :except => [:other_field]
   end
+
+ For set limit options
+
+  class Post < ActiveRecord::Base
+    validates_lengths_from_database :limit => [:string => 30, :text => 50]
+  end
+
 
 Note that this cannot be done at a global level directly against ActiveRecord::Base, since the +validates_length_from_database+ method requires the class to have a table name (with the ability to load the schema).

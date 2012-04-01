@@ -1,6 +1,9 @@
+require 'bundler'
 require 'rubygems'
 require 'rake'
 require 'rake/rdoctask'
+
+Bundler::GemHelper.install_tasks
 
 desc "Generate documentation for the plugin."
 Rake::RDocTask.new(:rdoc) do |rdoc|

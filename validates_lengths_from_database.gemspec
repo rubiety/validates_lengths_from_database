@@ -3,14 +3,14 @@ $:.push File.expand_path("../lib", __FILE__)
 require "validates_lengths_from_database/version"
 
 Gem::Specification.new do |s|
-  s.name        = "validates_lengths_from_database"
+  s.name        = "validates_lengths_from_database_advanced"
   s.version     = ValidatesLengthsFromDatabase::VERSION
   s.author      = "Ben Hughes"
   s.email       = "ben@railsgarden.com"
-  s.homepage    = "http://github.com/rubiety/validates_lengths_from_database"
+  s.homepage    = "http://github.com/robinbortlik/validates_lengths_from_database"
   s.summary     = "Automatic maximum-length validations."
   s.description = "Introspects your database string field maximum lengths and automatically defines length validations."
-  
+
   s.files        = Dir["{lib,spec,rails}/**/*", "[A-Z]*", "init.rb"]
   s.require_path = "lib"
   
