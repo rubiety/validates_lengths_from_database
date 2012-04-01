@@ -22,5 +22,12 @@ Gem::Specification.new do |s|
   s.add_development_dependency("sqlite3", ["~> 1.3.4"])
   s.add_development_dependency('appraisal', ["~> 0.4.0"])
   s.add_development_dependency("rdoc", ["~> 3.12"])
+  s.add_development_dependency "rake"
+  
+  # I'm not sure why this isn't installed along with activesupport,
+  # but for whatever reason running `bundle install` doesn't install
+  # i18n so I'm adding it here for now.
+  # https://github.com/rails/rails/blob/master/activesupport/activesupport.gemspec#L19 ?
+  s.add_development_dependency "i18n"
 end
 
