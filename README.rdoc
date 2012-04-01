@@ -1,3 +1,5 @@
+{<img src="https://secure.travis-ci.org/rubiety/validates_lengths_from_database.png?branch=master" alt="Build Status" />}[http://travis-ci.org/rubiety/validates_lengths_from_database]
+
 == Validates Lengths from Database
 
 Few people add length validations to fields in their database, and when saving such fields that have exhausted their length, an SQL error occurs.
