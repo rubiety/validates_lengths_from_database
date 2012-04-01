@@ -1,15 +1,29 @@
 require 'rubygems'
-require 'rake'
-require 'rake/rdoctask'
+require 'bundler/setup'
 
-desc "Generate documentation for the plugin."
-Rake::RDocTask.new(:rdoc) do |rdoc|
-  rdoc.rdoc_dir = "rdoc"
-  rdoc.title    = "validates_lengths_from_database"
-  rdoc.options << "--line-numbers" << "--inline-source"
-  rdoc.rdoc_files.include('README')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+require 'rake'
+require 'rspec/core/rake_task'
+require 'appraisal'
+
+desc 'Default: run unit tests.'
+task :default => [:clean, :all]
+
+desc "Run Specs against all Appraisals"
+task :all => :spec do
+  Rake::Task["appraisal:install"].execute
+  system("bundle exec rake -s appraisal spec")
 end
 
-Dir["#{File.dirname(__FILE__)}/lib/tasks/*.rake"].sort.each { |ext| load ext }
+desc "Run Specs"
+RSpec::Core::RakeTask.new(:spec) do |t|
+end
+
+task :test => :spec
+
+desc "Clean up files."
+task :clean do |t|
+  FileUtils.rm_rf "tmp"
+  Dir.glob("spec/db/*.sqlite3").each {|f| FileUtils.rm f }
+  Dir.glob("validates_lengths_from_database-*.gem").each {|f| FileUtils.rm f }
+end
 

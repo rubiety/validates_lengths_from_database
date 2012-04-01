@@ -113,7 +113,7 @@ describe ValidatesLengthsFromDatabase do
       it "should have errors on all string/text attributes" do
         @article.errors["string_1"].join.should =~ /too long/
         @article.errors["string_2"].join.should =~ /too long/
-        @article.errors["text_1"].should be_empty
+        @article.errors["text_1"].should_not be_present
       end
     end
   end
