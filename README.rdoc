@@ -43,3 +43,11 @@ Or to set the limit differently for string (VARCHAR) and (TEXT) columns:
 
 Note that unfortunately this cannot be done at a global level directly against ActiveRecord::Base, since the +validates_length_from_database+ method requires the class to have a table name (with the ability to load the schema).
 
+== Running Tests
+
+  # Just the gems locked in Gemfile.lock
+  $ bundle exec rake test
+
+  # All of the Appraisals:
+  $ bundle exec rake all
+
