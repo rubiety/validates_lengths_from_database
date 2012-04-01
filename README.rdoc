@@ -27,4 +27,17 @@ It also supports filter-style :only and :except options:
     validates_lengths_from_database :except => [:other_field]
   end
 
-Note that this cannot be done at a global level directly against ActiveRecord::Base, since the +validates_length_from_database+ method requires the class to have a table name (with the ability to load the schema).
+If you'd rather specify the limits explicitly instead of pulling them from the database, you can set it:
+
+  class Post < ActiveRecord::Base
+    validates_lengths_from_database :limit => 255
+  end
+
+Or to set the limit differently for string (VARCHAR) and (TEXT) columns:
+
+  class Post < ActiveRecord::Base
+    validates_lengths_from_database :limit => {:string => 255, :text => 4092}
+  end
+
+Note that unfortunately this cannot be done at a global level directly against ActiveRecord::Base, since the +validates_length_from_database+ method requires the class to have a table name (with the ability to load the schema).
+

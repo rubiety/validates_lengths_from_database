@@ -18,6 +18,10 @@ describe ValidatesLengthsFromDatabase do
     :integer_1 => 123
   }
 
+  before(:all) do
+    ActiveSupport::Deprecation.silenced = true
+  end
+
   context "Model without associated table" do
     specify "defining validates_lengths_from_database should not raise an error" do
       lambda {
@@ -56,6 +60,60 @@ describe ValidatesLengthsFromDatabase do
 
       it "should be valid" do
         @article.should be_valid
+      end
+    end
+  end
+  
+  context "Model with validates_lengths_from_database :limit => 10" do
+    before do
+      class ArticleValidateLimit < ActiveRecord::Base
+        set_table_name "articles_high_limit"
+        validates_lengths_from_database :limit => 5
+      end
+    end
+
+    context "an article with overloaded attributes" do
+      before { @article = ArticleValidateLimit.new(LONG_ATTRIBUTES); @article.valid? }
+
+      it "should not be valid" do
+        @article.should_not be_valid
+      end
+
+      it "should have errors on all string/text attributes" do
+        @article.errors["string_1"].join.should =~ /too long/
+        @article.errors["string_2"].join.should =~ /too long/
+        @article.errors["text_1"].join.should =~ /too long/
+      end
+    end
+
+    context "an article with short attributes" do
+      before { @article = ArticleValidateLimit.new(SHORT_ATTRIBUTES); @article.valid? }
+
+      it "should be valid" do
+        @article.should be_valid
+      end
+    end
+  end
+  
+  context "Model with validates_lengths_from_database :limit => {:string => 5, :text => 100}" do
+    before do
+      class ArticleValidateSpecificLimit < ActiveRecord::Base
+        set_table_name "articles_high_limit"
+        validates_lengths_from_database :limit => {:string => 5, :text => 100}
+      end
+    end
+
+    context "an article with overloaded attributes" do
+      before { @article = ArticleValidateSpecificLimit.new(LONG_ATTRIBUTES); @article.valid? }
+
+      it "should not be valid" do
+        @article.should_not be_valid
+      end
+
+      it "should have errors on all string/text attributes" do
+        @article.errors["string_1"].join.should =~ /too long/
+        @article.errors["string_2"].join.should =~ /too long/
+        @article.errors["text_1"].should be_empty
       end
     end
   end
