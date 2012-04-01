@@ -5,6 +5,8 @@ require 'rake'
 require 'rspec/core/rake_task'
 require 'appraisal'
 
+Bundler::GemHelper.install_tasks
+
 desc 'Default: run unit tests.'
 task :default => [:clean, :all]
 
