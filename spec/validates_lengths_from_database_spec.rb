@@ -26,7 +26,7 @@ describe ValidatesLengthsFromDatabase do
     specify "defining validates_lengths_from_database should not raise an error" do
       lambda {
         class InvalidTableArticle < ActiveRecord::Base
-          set_table_name "articles_invalid"
+          self.table_name = "articles_invalid"
           validates_lengths_from_database
         end
       }.should_not raise_error
@@ -36,7 +36,7 @@ describe ValidatesLengthsFromDatabase do
   context "Model with validates_lengths_from_database" do
     before do
       class ArticleValidateAll < ActiveRecord::Base
-        set_table_name "articles"
+        self.table_name = "articles"
         validates_lengths_from_database
       end
     end
@@ -67,7 +67,7 @@ describe ValidatesLengthsFromDatabase do
   context "Model with validates_lengths_from_database :limit => 10" do
     before do
       class ArticleValidateLimit < ActiveRecord::Base
-        set_table_name "articles_high_limit"
+        self.table_name = "articles_high_limit"
         validates_lengths_from_database :limit => 5
       end
     end
@@ -98,7 +98,7 @@ describe ValidatesLengthsFromDatabase do
   context "Model with validates_lengths_from_database :limit => {:string => 5, :text => 100}" do
     before do
       class ArticleValidateSpecificLimit < ActiveRecord::Base
-        set_table_name "articles_high_limit"
+        self.table_name = "articles_high_limit"
         validates_lengths_from_database :limit => {:string => 5, :text => 100}
       end
     end
@@ -121,7 +121,7 @@ describe ValidatesLengthsFromDatabase do
   context "Model with validates_lengths_from_database :only => [:string_1, :text_1]" do
     before do
       class ArticleValidateOnly < ActiveRecord::Base
-        set_table_name "articles"
+        self.table_name = "articles"
         validates_lengths_from_database :only => [:string_1, :text_1]
       end
     end
@@ -152,7 +152,7 @@ describe ValidatesLengthsFromDatabase do
   context "Model with validates_lengths_from_database :except => [:string_1, :text_1]" do
     before do
       class ArticleValidateExcept < ActiveRecord::Base
-        set_table_name "articles"
+        self.table_name = "articles"
         validates_lengths_from_database :except => [:string_1, :text_1]
       end
     end
