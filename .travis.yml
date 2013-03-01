@@ -16,5 +16,8 @@ matrix:
     gemfile: gemfiles/4.0.gemfile
   - rvm: 1.9.2
     gemfile: gemfiles/4.0.gemfile
-before_script: "bundle install"
+before_install:
+  - "gem install bundler -v=1.3.0"
+before_script:
+  - "bundle install"
 script: "bundle exec rake clean test"
