@@ -1,4 +1,6 @@
 {<img src="https://secure.travis-ci.org/rubiety/validates_lengths_from_database.png?branch=master" alt="Build Status" />}[http://travis-ci.org/rubiety/validates_lengths_from_database]
+{<img src="https://gemnasium.com/rubiety/validates_lengths_from_database.png" alt="Dependency Status" />}[https://gemnasium.com/rubiety/validates_lengths_from_database]
+{<img src="https://codeclimate.com/github/rubiety/validates_lengths_from_database.png" />}[https://codeclimate.com/github/rubiety/validates_lengths_from_database]
 
 == Validates Lengths from Database
 
