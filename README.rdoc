@@ -45,9 +45,11 @@ Note that unfortunately this cannot be done at a global level directly against A
 
 == Running Tests
 
+This gem uses appraisal to test with different versions of the dependencies. See Appraisal first for which versions are tested.
+
   # Just the gems locked in Gemfile.lock
-  $ bundle exec rake test
+  $ rake test
 
   # All of the Appraisals:
-  $ bundle exec rake all
+  $ rake appraisal test
 
