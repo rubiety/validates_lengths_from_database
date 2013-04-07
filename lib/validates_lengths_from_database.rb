@@ -38,6 +38,8 @@ module ValidatesLengthsFromDatabase
           
           ActiveModel::Validations::LengthValidator.new(:maximum => column_limit, :allow_blank => true, :attributes => [column]).validate(self)
         end
+        
+        true
       end
 
       nil
