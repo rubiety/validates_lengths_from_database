@@ -20,24 +20,26 @@ module ValidatesLengthsFromDatabase
         options[:limit] = {:string => options[:limit], :text => options[:limit]}
       end
 
-      if options[:only]
-        columns_to_validate = options[:only].map(&:to_s)
-      else
-        columns_to_validate = column_names.map(&:to_s)
-        columns_to_validate -= options[:except].map(&:to_s) if options[:except]
-      end
-
-      columns_to_validate.each do |column|
-        column_schema = columns.find {|c| c.name == column }
-        next if column_schema.nil?
-        next if ![:string, :text].include?(column_schema.type)
-        
-        column_limit = options[:limit][column_schema.type] || column_schema.limit
-        next unless column_limit
-
-        class_eval do
-          validates_length_of column, :maximum => column_limit, :allow_blank => true
+      before_validation do
+        if options[:only]
+          columns_to_validate = options[:only].map(&:to_s)
+        else
+          columns_to_validate = self.class.column_names.map(&:to_s)
+          columns_to_validate -= options[:except].map(&:to_s) if options[:except]
         end
+				
+        columns_to_validate.each do |column|
+          column_schema = self.class.columns.find {|c| c.name == column }
+          next if column_schema.nil?
+          next if ![:string, :text].include?(column_schema.type)
+          
+          column_limit = options[:limit][column_schema.type] || column_schema.limit
+          next unless column_limit
+          
+          ActiveModel::Validations::LengthValidator.new(:maximum => column_limit, :allow_blank => true, :attributes => [column]).validate(self)
+        end
+        
+        true
       end
 
       nil
