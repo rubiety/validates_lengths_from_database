@@ -63,8 +63,8 @@ describe ValidatesLengthsFromDatabase do
       end
     end
   end
-  
-  context "Model with validates_lengths_from_database :limit => 10" do
+
+  context "Model with validates_lengths_from_database :limit => 5" do
     before do
       class ArticleValidateLimit < ActiveRecord::Base
         self.table_name = "articles_high_limit"
@@ -94,7 +94,7 @@ describe ValidatesLengthsFromDatabase do
       end
     end
   end
-  
+
   context "Model with validates_lengths_from_database :limit => {:string => 5, :text => 100}" do
     before do
       class ArticleValidateSpecificLimit < ActiveRecord::Base
@@ -117,7 +117,7 @@ describe ValidatesLengthsFromDatabase do
       end
     end
   end
-  
+
   context "Model with validates_lengths_from_database :only => [:string_1, :text_1]" do
     before do
       class ArticleValidateOnly < ActiveRecord::Base
@@ -179,5 +179,5 @@ describe ValidatesLengthsFromDatabase do
       end
     end
   end
-  
+
 end
