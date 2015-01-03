@@ -31,7 +31,8 @@ module ValidatesLengthsFromDatabase
         column_schema = columns.find {|c| c.name == column }
         next if column_schema.nil?
         next if ![:string, :text].include?(column_schema.type)
-        
+        next if column_schema.respond_to?(:array) && column_schema.array
+
         column_limit = options[:limit][column_schema.type] || column_schema.limit
         next unless column_limit
 
