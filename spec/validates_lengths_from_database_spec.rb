@@ -51,7 +51,7 @@ describe ValidatesLengthsFromDatabase do
       it "should have errors on all string/text attributes" do
         @article.errors["string_1"].join.should =~ /too long/
         @article.errors["string_2"].join.should =~ /too long/
-        @article.errors["text_1"].join.should =~ /too long/
+        @article.errors["text_1"].join.should =~ /too long/  unless postgresql?  # PostgreSQL doesn't support limits on text columns
       end
     end
 
@@ -63,7 +63,7 @@ describe ValidatesLengthsFromDatabase do
       end
     end
   end
-  
+
   context "Model with validates_lengths_from_database :limit => 10" do
     before do
       class ArticleValidateLimit < ActiveRecord::Base
@@ -94,7 +94,7 @@ describe ValidatesLengthsFromDatabase do
       end
     end
   end
-  
+
   context "Model with validates_lengths_from_database :limit => {:string => 5, :text => 100}" do
     before do
       class ArticleValidateSpecificLimit < ActiveRecord::Base
@@ -117,7 +117,7 @@ describe ValidatesLengthsFromDatabase do
       end
     end
   end
-  
+
   context "Model with validates_lengths_from_database :only => [:string_1, :text_1]" do
     before do
       class ArticleValidateOnly < ActiveRecord::Base
@@ -136,7 +136,7 @@ describe ValidatesLengthsFromDatabase do
       it "should have errors on only string_1 and text_1" do
         @article.errors["string_1"].join.should =~ /too long/
         (@article.errors["string_2"] || []).should be_empty
-        @article.errors["text_1"].join.should =~ /too long/
+        @article.errors["text_1"].join.should =~ /too long/ unless postgresql?  # PostgreSQL doesn't support limits on text columns
       end
     end
 
@@ -179,5 +179,4 @@ describe ValidatesLengthsFromDatabase do
       end
     end
   end
-  
 end
