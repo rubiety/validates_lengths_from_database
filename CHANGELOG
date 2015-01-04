@@ -1,0 +1,7 @@
+== v0.3.0 (2015-01-03)
+
+* Explicit support for Rails 4.1 and 4.2
+* Up-to-date Appraisals and dependencies
+* Better support for postgres text columns via conditional length validation
+* Bug fix for postgres array column types
+
