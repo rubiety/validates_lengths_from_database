@@ -1,6 +1,7 @@
 require "rubygems"
 require "rspec"
 require "active_record"
+require "active_support"
 
 # Establish DB Connection
 config = YAML::load(IO.read(File.join(File.dirname(__FILE__), 'db', 'database.yml')))
