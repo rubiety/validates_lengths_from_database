@@ -1,3 +1,7 @@
+== v0.4.0 (2015-01-03)
+
+* Drop support for ruby 1.8.7 and 1.9.2 - too many issues with backwards-compatibility
+
 == v0.3.0 (2015-01-03)
 
 * Explicit support for Rails 4.1 and 4.2
