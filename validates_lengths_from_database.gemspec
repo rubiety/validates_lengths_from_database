@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = s.name
   s.required_rubygems_version = ">= 1.3.4"
+  s.required_ruby_version = ">= 1.9.3"
 
   s.add_dependency("activerecord", [">= 2.3.2"])
   s.add_development_dependency("activesupport", [">= 2.3.2"])
@@ -31,6 +32,6 @@ Gem::Specification.new do |s|
   # i18n so I'm adding it here for now.
   # https://github.com/rails/rails/blob/master/activesupport/activesupport.gemspec#L19 ?
   s.add_development_dependency("i18n")
-  s.add_development_dependency("iconv", "~> 1.0.3")
+  s.add_development_dependency("iconv", "~> 1.0.4")
 end
 
