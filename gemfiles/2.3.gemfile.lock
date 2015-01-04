@@ -1,7 +1,7 @@
 PATH
   remote: ../
   specs:
-    validates_lengths_from_database (0.2.0)
+    validates_lengths_from_database (0.3.0)
       activerecord (>= 2.3.2)
 
 GEM

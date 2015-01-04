@@ -1,7 +1,7 @@
 PATH
   remote: ../
   specs:
-    validates_lengths_from_database (0.2.0)
+    validates_lengths_from_database (0.3.0)
       activerecord (>= 2.3.2)
 
 GEM
@@ -43,7 +43,7 @@ GEM
     diff-lcs (1.2.5)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    i18n (0.5.0)
+    i18n (0.5.4)
     iconv (1.0.4)
     json (1.8.1)
     mail (2.2.19)
