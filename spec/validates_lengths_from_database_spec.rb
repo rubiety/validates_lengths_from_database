@@ -62,6 +62,16 @@ describe ValidatesLengthsFromDatabase do
         @article.should be_valid
       end
     end
+
+    if database_supports_arrays?
+      context "an article with with string array attribute" do
+        before { @article = ArticleValidateAll.new(:array_1 => %w(1 2 3 4 5 6 7 8 9 10)); @article.valid? }
+
+        it "should be valid" do
+          @article.should be_valid
+        end
+      end
+    end
   end
 
   context "Model with validates_lengths_from_database :limit => 5" do

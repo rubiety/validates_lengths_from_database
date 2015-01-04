@@ -10,6 +10,9 @@ ActiveRecord::Schema.define(:version => 0) do
     end
     t.date :date_1
     t.integer :integer_1
+    if database_supports_arrays?
+      t.string :array_1, array: true, :limit => 5
+    end
   end
 
   create_table :articles_high_limit, :force => true do |t|
@@ -18,6 +21,9 @@ ActiveRecord::Schema.define(:version => 0) do
     t.text :text_1
     t.date :date_1
     t.integer :integer_1
+    if database_supports_arrays?
+      t.string :array_1, array: true
+    end
   end
 end
 

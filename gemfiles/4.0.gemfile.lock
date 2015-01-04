@@ -50,6 +50,7 @@ GEM
     mime-types (1.21)
     minitest (4.6.2)
     multi_json (1.6.1)
+    pg (0.17.1)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -104,6 +105,7 @@ PLATFORMS
 DEPENDENCIES
   appraisal (~> 1.0.2)
   i18n
+  pg (~> 0.17.1)
   rails (~> 4.0.0.beta1)
   rake
   rdoc (~> 3.12)
