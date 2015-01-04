@@ -51,7 +51,7 @@ describe ValidatesLengthsFromDatabase do
       it "should have errors on all string/text attributes" do
         @article.errors["string_1"].join.should =~ /too long/
         @article.errors["string_2"].join.should =~ /too long/
-        @article.errors["text_1"].join.should =~ /too long/
+        @article.errors["text_1"].join.should =~ /too long/  unless postgresql?  # PostgreSQL doesn't support limits on text columns
       end
     end
 
@@ -136,7 +136,7 @@ describe ValidatesLengthsFromDatabase do
       it "should have errors on only string_1 and text_1" do
         @article.errors["string_1"].join.should =~ /too long/
         (@article.errors["string_2"] || []).should be_empty
-        @article.errors["text_1"].join.should =~ /too long/
+        @article.errors["text_1"].join.should =~ /too long/ unless postgresql?  # PostgreSQL doesn't support limits on text columns
       end
     end
 
