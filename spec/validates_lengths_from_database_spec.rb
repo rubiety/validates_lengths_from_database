@@ -33,6 +33,69 @@ describe ValidatesLengthsFromDatabase do
     end
   end
 
+  context "Model without a table yet" do
+    before do
+      class LazyTableArticle < ActiveRecord::Base
+        self.table_name = "articles_lazy"
+        validates_lengths_from_database
+      end
+    end
+
+    context "before the table is created" do
+      specify "should fail to create records" do
+        lambda { LazyTableArticle.new }.should raise_error
+      end
+    end
+
+    context "after the table is created" do
+      before do
+        ActiveRecord::Schema.define do
+          create_table :articles_lazy, :force => false do |t|
+            t.string :string_1, :limit => 5
+          end
+        end
+      end
+
+      after do
+        ActiveRecord::Schema.define do
+          drop_table :articles_lazy
+        end
+      end
+
+      context "an article with long attributes" do
+        before { @article = LazyTableArticle.new(LONG_ATTRIBUTES.slice(:string_1)); @article.valid? }
+
+        specify "should not be valid" do
+          @article.should_not be_valid
+        end
+      end
+
+      context "an article with short attributes" do
+        before { @article = LazyTableArticle.new(SHORT_ATTRIBUTES.slice(:string_1)); @article.valid? }
+
+        specify "should be valid" do
+          @article.should be_valid
+        end
+      end
+    end
+  end
+
+  context "Model without validates_lengths_from_database" do
+    before do
+      class ArticleValidateAll < ActiveRecord::Base
+        self.table_name = "articles"
+      end
+    end
+
+    context "an article with overloaded attributes" do
+      before { @article = ArticleValidateAll.new(LONG_ATTRIBUTES); @article.valid? }
+
+      it "should be valid" do
+        @article.should be_valid
+      end
+    end
+  end
+
   context "Model with validates_lengths_from_database" do
     before do
       class ArticleValidateAll < ActiveRecord::Base
