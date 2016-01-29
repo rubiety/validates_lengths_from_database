@@ -60,5 +60,6 @@ This gem uses appraisal to test with different versions of the dependencies. See
   $ rake test
 
   # All of the Appraisals:
-  $ rake appraisal test
+  $ appraisal install
+  $ appraisal rake test
 
