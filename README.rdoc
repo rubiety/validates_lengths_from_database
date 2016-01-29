@@ -9,6 +9,8 @@ This gem introspects your table schema for maximum lengths on string and text fi
 
 == Requirements
 
+As of v0.5.0, validates_lengths_from_database lazily loads column information and requires Rails 3+. If you are using Rails 2, please use the v0.4.0 release.
+
 Due to issues maintaining backwards compatibility, as of v0.4.0 validates_lengths_from_database requires ruby 1.9.3 or higher. 
 If you are still using 1.8.7 or 1.9.2, please use the v0.3.0 release.
 
