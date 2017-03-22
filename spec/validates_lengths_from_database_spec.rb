@@ -8,7 +8,8 @@ describe ValidatesLengthsFromDatabase do
     :text_1 => "123456789",
     :date_1 => Date.today,
     :integer_1 => 123456789,
-    :decimal_1 => 123456789.01
+    :decimal_1 => 123456789.01,
+    :float_1 => 123456789.01
   }
 
   SHORT_ATTRIBUTES = {
@@ -17,7 +18,8 @@ describe ValidatesLengthsFromDatabase do
     :text_1 => "12",
     :date_1 => Date.today,
     :integer_1 => 123,
-    :decimal_1 => 12.34
+    :decimal_1 => 12.34,
+    :float_1 => 12.34
   }
 
   before(:all) do
@@ -120,6 +122,7 @@ describe ValidatesLengthsFromDatabase do
         @article.errors["decimal_1"].join.should =~ /too long/
         @article.errors["decimal_1"].join.should =~ /less than/
         @article.errors["integer_1"].join.should =~ /too long/  
+        @article.errors["float_1"].join.should =~ /too long/
       end
     end
 
@@ -163,6 +166,7 @@ describe ValidatesLengthsFromDatabase do
         @article.errors["text_1"].join.should =~ /too long/
         @article.errors["text_1"].join.should =~ /too long/
         @article.errors["integer_1"].join.should =~ /too long/
+        @article.errors["float_1"].join.should =~ /too long/
       end
     end
 
@@ -176,11 +180,11 @@ describe ValidatesLengthsFromDatabase do
     end
   end
 
-  context "Model with validates_lengths_from_database :limit => {:string => 5, :text => 100, :integer => 100, :decimal => 100}" do
+  context "Model with validates_lengths_from_database :limit => {:string => 5, :text => 100, :integer => 100, :decimal => 100, :float => 100}" do
     before do
       class ArticleValidateSpecificLimit < ActiveRecord::Base
         self.table_name = "articles_high_limit"
-        validates_lengths_from_database :limit => {:string => 5, :text => 100, :integer => 100, :decimal => 100}
+        validates_lengths_from_database :limit => {:string => 5, :text => 100, :integer => 100, :decimal => 100, :float => 100}
       end
     end
 
@@ -197,6 +201,7 @@ describe ValidatesLengthsFromDatabase do
         @article.errors["text_1"].should_not be_present
         @article.errors["decimal_1"].should_not be_present
         @article.errors["integer_1"].should_not be_present
+        @article.errors["float_1"].should_not be_present
       end
     end
   end
@@ -222,6 +227,7 @@ describe ValidatesLengthsFromDatabase do
         @article.errors["text_1"].join.should =~ /too long/ unless postgresql?  # PostgreSQL doesn't support limits on text columns
         (@article.errors["decimal_1"] || []).should be_empty
         (@article.errors["integer_1"] || []).should be_empty
+        (@article.errors["float_1"] || []).should be_empty
       end
     end
 
@@ -256,6 +262,7 @@ describe ValidatesLengthsFromDatabase do
         @article.errors["decimal_1"].join.should =~ /less than/
         @article.errors["integer_1"].join.should =~ /too long/
         @article.errors["string_2"].join.should =~ /too long/
+        @article.errors["float_1"].join.should =~ /too long/
       end
     end
 

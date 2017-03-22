@@ -16,7 +16,7 @@ module ValidatesLengthsFromDatabase
       options[:limit] ||= {}
 
       if options[:limit] and !options[:limit].is_a?(Hash)
-        options[:limit] = {:string => options[:limit], :text => options[:limit], :decimal => options[:limit], :integer => options[:limit]}
+        options[:limit] = {:string => options[:limit], :text => options[:limit], :decimal => options[:limit], :integer => options[:limit], :float => options[:limit]}
       end
       @@validate_lengths_from_database_options = options
 
@@ -46,7 +46,7 @@ module ValidatesLengthsFromDatabase
         next if column_schema.nil?
         next if column_schema.respond_to?(:array) && column_schema.array
 
-        if [:string, :text, :integer, :decimal].include?(column_schema.type)      
+        if [:string, :text, :integer, :decimal, :float].include?(column_schema.type)      
           column_limit = options[:limit][column_schema.type] || column_schema.limit          
 
           ActiveModel::Validations::LengthValidator.new(:maximum => column_limit, :allow_blank => true, :attributes => [column]).validate(self) if column_limit
