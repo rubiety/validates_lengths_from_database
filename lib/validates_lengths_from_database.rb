@@ -16,7 +16,7 @@ module ValidatesLengthsFromDatabase
       options[:limit] ||= {}
 
       if options[:limit] and !options[:limit].is_a?(Hash)
-        options[:limit] = {:string => options[:limit], :text => options[:limit]}
+        options[:limit] = {:string => options[:limit], :text => options[:limit], :decimal => options[:limit], :integer => options[:limit]}
       end
       @@validate_lengths_from_database_options = options
 
@@ -44,13 +44,21 @@ module ValidatesLengthsFromDatabase
       columns_to_validate.each do |column|
         column_schema = self.class.columns.find {|c| c.name == column }
         next if column_schema.nil?
-        next if ![:string, :text].include?(column_schema.type)
         next if column_schema.respond_to?(:array) && column_schema.array
 
-        column_limit = options[:limit][column_schema.type] || column_schema.limit
-        next unless column_limit
+        if [:string, :text, :integer, :decimal].include?(column_schema.type)      
+          column_limit = options[:limit][column_schema.type] || column_schema.limit          
 
-        ActiveModel::Validations::LengthValidator.new(:maximum => column_limit, :allow_blank => true, :attributes => [column]).validate(self)
+          ActiveModel::Validations::LengthValidator.new(:maximum => column_limit, :allow_blank => true, :attributes => [column]).validate(self) if column_limit
+
+          if column_schema.type == :decimal && column_schema.precision && column_schema.scale
+
+            max_val = (10 ** column_schema.precision)/(10 ** column_schema.scale)
+
+            ActiveModel::Validations::NumericalityValidator.new(:less_than => max_val, :allow_blank => true, :attributes => [column]).validate(self)
+          end
+        end
+
       end
     end
   end

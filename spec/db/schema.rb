@@ -11,7 +11,9 @@ ActiveRecord::Schema.define(:version => 0) do
     end
 
     t.date :date_1
-    t.integer :integer_1
+  
+    t.integer :integer_1, :limit => 5
+    t.decimal :decimal_1, :precision => 5, :scale => 2
 
     if database_supports_arrays?
       t.string :array_1, :array => true, :limit => 5
@@ -24,6 +26,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.text :text_1
     t.date :date_1
     t.integer :integer_1
+    t.decimal :decimal_1, :precision => 11, :scale => 2
 
     if database_supports_arrays?
       t.string :array_1, :array => true
