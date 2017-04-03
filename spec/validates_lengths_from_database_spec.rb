@@ -119,7 +119,7 @@ describe ValidatesLengthsFromDatabase do
         @article.errors["string_1"].join.should =~ /too long/
         @article.errors["string_2"].join.should =~ /too long/
         @article.errors["text_1"].join.should =~ /too long/  unless postgresql?  # PostgreSQL doesn't support limits on text columns
-        @article.errors["decimal_1"].join.should =~ /too long/ unless postgresql?
+        @article.errors["decimal_1"].join.should =~ /too long/ 
         @article.errors["decimal_1"].join.should =~ /less than/
         @article.errors["integer_1"].join.should =~ /too long/  
         @article.errors["float_1"].join.should =~ /too long/
@@ -164,8 +164,7 @@ describe ValidatesLengthsFromDatabase do
         @article.errors["string_1"].join.should =~ /too long/
         @article.errors["string_2"].join.should =~ /too long/
         @article.errors["text_1"].join.should =~ /too long/
-        @article.errors["decimal_1"].join.should =~ /too long/ unless postgresql?
-        @article.errors["decimal_1"].join.should =~ /less than/
+        @article.errors["decimal_1"].join.should =~ /too long/ 
         @article.errors["integer_1"].join.should =~ /too long/
         @article.errors["float_1"].join.should =~ /too long/
       end
@@ -259,7 +258,7 @@ describe ValidatesLengthsFromDatabase do
       it "should have errors on columns other than string_1 and text_1 only" do
         (@article.errors["string_1"] || []).should be_empty
         (@article.errors["text_1"] || []).should be_empty
-        @article.errors["decimal_1"].join.should =~ /too long/ unless postgresql?
+        @article.errors["decimal_1"].join.should =~ /too long/ 
         @article.errors["decimal_1"].join.should =~ /less than/
         @article.errors["integer_1"].join.should =~ /too long/
         @article.errors["string_2"].join.should =~ /too long/
