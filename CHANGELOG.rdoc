@@ -1,3 +1,7 @@
+== v0.5.1 (2017-04-27)
+
+* Fix sharing options between models - thanks @iNecas
+
 == v0.5.0 (2016-01-28)
 
 * Drop support for rails 2
