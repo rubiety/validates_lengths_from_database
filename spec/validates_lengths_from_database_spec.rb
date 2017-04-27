@@ -106,6 +106,11 @@ describe ValidatesLengthsFromDatabase do
         self.table_name = "articles"
         validates_lengths_from_database
       end
+
+      class ArticleValidateText < ActiveRecord::Base
+        self.table_name = "articles"
+        validates_lengths_from_database :only => [:text_1]
+      end
     end
 
     context "an article with overloaded attributes" do
