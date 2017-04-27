@@ -18,7 +18,7 @@ module ValidatesLengthsFromDatabase
       if options[:limit] and !options[:limit].is_a?(Hash)
         options[:limit] = {:string => options[:limit], :text => options[:limit], :decimal => options[:limit], :integer => options[:limit], :float => options[:limit]}
       end
-      @@validate_lengths_from_database_options = options
+      @validate_lengths_from_database_options = options
 
       validate :validate_lengths_from_database
 
@@ -26,7 +26,7 @@ module ValidatesLengthsFromDatabase
     end
 
     def validate_lengths_from_database_options
-      @@validate_lengths_from_database_options
+      @validate_lengths_from_database_options
     end
   end
 
