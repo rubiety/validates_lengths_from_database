@@ -1,3 +1,7 @@
+== v0.5.2 (2017-04-28)
+
+* Fix handling with STI models - thanks @iNecas
+
 == v0.5.1 (2017-04-27)
 
 * Fix sharing options between models - thanks @iNecas
