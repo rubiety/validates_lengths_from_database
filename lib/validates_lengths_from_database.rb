@@ -26,7 +26,16 @@ module ValidatesLengthsFromDatabase
     end
 
     def validate_lengths_from_database_options
-      @validate_lengths_from_database_options
+      if defined? @validate_lengths_from_database_options
+        @validate_lengths_from_database_options
+      else
+        # in case we inherited the validations, copy the options so that we can update it in child
+        # without affecting the parent
+        @validate_lengths_from_database_options = superclass.validate_lengths_from_database_options.inject({}) do |hash, (key, value)|
+          value = value.dup if value.respond_to?(:dup)
+          hash.update(key => value)
+        end
+      end
     end
   end
 

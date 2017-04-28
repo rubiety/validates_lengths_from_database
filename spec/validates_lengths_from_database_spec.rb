@@ -109,7 +109,7 @@ describe ValidatesLengthsFromDatabase do
 
       class ArticleValidateText < ActiveRecord::Base
         self.table_name = "articles"
-        validates_lengths_from_database :only => [:text_1]
+        validates_lengths_from_database :only => [:string_1]
       end
     end
 
@@ -127,6 +127,30 @@ describe ValidatesLengthsFromDatabase do
         @article.errors["decimal_1"].join.should =~ /less than/
         @article.errors["integer_1"].join.should =~ /too long/  
         @article.errors["float_1"].join.should =~ /too long/
+      end
+    end
+
+    context "STI" do
+      before do
+        class ArticleValidateChild < ArticleValidateText
+        end
+        class ArticleValidateChildOverwrite < ArticleValidateText
+          validate_lengths_from_database_options[:only] << :string_2
+        end
+      end
+
+      it "should inherit the validation options from the parent" do
+        @article = ArticleValidateChild.new(LONG_ATTRIBUTES)
+        @article.valid?
+        @article.errors["string_1"].join.should =~ /too long/
+        @article.errors["string_2"].join.should_not =~ /too long/
+      end
+
+      it "should allow changing the validation options of child" do
+        @article = ArticleValidateChildOverwrite.new(LONG_ATTRIBUTES)
+        @article.valid?
+        @article.errors["string_1"].join.should =~ /too long/
+        @article.errors["string_2"].join.should =~ /too long/
       end
     end
 
