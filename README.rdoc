@@ -50,7 +50,27 @@ Or to set the limit differently for string (VARCHAR) and (TEXT) columns:
     validates_lengths_from_database :limit => {:string => 255, :text => 4092}
   end
 
-Note that unfortunately this cannot be done at a global level directly against ActiveRecord::Base, since the +validates_length_from_database+ method requires the class to have a table name (with the ability to load the schema).
+Since v0.5.2, it's possible to use the `validate_lengths_from_database`
+on an abstract parent (without a table), such as +ApplicationRecord+ or <tt>ActiveRecord::Base</tt>.
+
+  class ApplicationRecord < ActiveRecord::Base
+    self.abstract_class = true
+    validates_lengths_from_database :limit => 255
+  end
+
+  # This will use the validations with default options (from parent)
+  class Post < ApplicationRecord
+  end
+
+  # This will use the validations, with overriding the default options (the limit will not be applied)
+  class User < ApplicationRecord
+    validates_lengths_from_database :only => [:name]
+  end
+
+  # This will use the validations, using the default options + adding some class specific customizations
+  class Comment < ApplicationRecord
+    validate_lengths_from_database_options[:only] << :name
+  end
 
 == Running Tests
 
