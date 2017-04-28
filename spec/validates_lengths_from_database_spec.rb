@@ -26,6 +26,11 @@ describe ValidatesLengthsFromDatabase do
     ActiveSupport::Deprecation.silenced = true
   end
 
+  class ApplicationRecord < ActiveRecord::Base
+    self.abstract_class = true
+    validates_lengths_from_database :limit => 255
+  end
+
   context "Model without associated table" do
     specify "defining validates_lengths_from_database should not raise an error" do
       lambda {
@@ -130,12 +135,18 @@ describe ValidatesLengthsFromDatabase do
       end
     end
 
-    context "STI" do
+    context "inheritance" do
       before do
-        class ArticleValidateChild < ArticleValidateText
+        class ArticleValidateChild < ApplicationRecord
+          self.table_name = "articles"
+          validates_lengths_from_database :only => [:string_1]
         end
-        class ArticleValidateChildOverwrite < ArticleValidateText
+        class ArticleValidateChildOverwrite < ArticleValidateChild
           validate_lengths_from_database_options[:only] << :string_2
+        end
+        class ArticleWithoutValidations < ApplicationRecord
+          self.table_name = "articles"
+          validates_lengths_from_database :only => []
         end
       end
 
