@@ -54,20 +54,19 @@ module ValidatesLengthsFromDatabase
         column_schema = self.class.columns.find {|c| c.name == column }
         next if column_schema.nil?
         next if column_schema.respond_to?(:array) && column_schema.array
-
-        if [:string, :text, :integer, :decimal, :float].include?(column_schema.type)      
-          column_limit = options[:limit][column_schema.type] || column_schema.limit          
-
-          ActiveModel::Validations::LengthValidator.new(:maximum => column_limit, :allow_blank => true, :attributes => [column]).validate(self) if column_limit
-
-          if column_schema.type == :decimal && column_schema.precision && column_schema.scale
-
+        next unless [:string, :text, :decimal].include?(column_schema.type)
+        case column_schema.type
+        when :string, :text
+          column_limit = options[:limit][column_schema.type] || column_schema.limit
+          if column_limit
+            ActiveModel::Validations::LengthValidator.new(:maximum => column_limit, :allow_blank => true, :attributes => [column]).validate(self)
+          end
+        when :decimal
+          if column_schema.precision && column_schema.scale
             max_val = (10 ** column_schema.precision)/(10 ** column_schema.scale)
-
             ActiveModel::Validations::NumericalityValidator.new(:less_than => max_val, :allow_blank => true, :attributes => [column]).validate(self)
           end
         end
-
       end
     end
   end
