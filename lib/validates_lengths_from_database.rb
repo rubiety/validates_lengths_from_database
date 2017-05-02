@@ -9,6 +9,7 @@ module ValidatesLengthsFromDatabase
 
   module ClassMethods
     def validates_lengths_from_database(options = {})
+      return unless self.table_exists? #return if table does not exist. Happens in test env during migration
       options.symbolize_keys!
 
       options[:only]    = Array[options[:only]]   if options[:only] && !options[:only].is_a?(Array)
