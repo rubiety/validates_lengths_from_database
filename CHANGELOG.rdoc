@@ -1,3 +1,7 @@
+== v0.6.0 (2017-05-02)
+
+* Drop support for integer length validations (too many issues)
+
 == v0.5.2 (2017-04-28)
 
 * Fix handling with STI models - thanks @iNecas
