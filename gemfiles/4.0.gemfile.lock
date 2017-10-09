@@ -1,7 +1,7 @@
 PATH
-  remote: ../
+  remote: ..
   specs:
-    validates_lengths_from_database (0.5.0)
+    validates_lengths_from_database (0.6.0)
       activerecord (>= 3)
 
 GEM
@@ -42,7 +42,7 @@ GEM
     erubis (2.7.0)
     i18n (0.7.0)
     iconv (1.0.4)
-    json (1.8.3)
+    json (1.8.6)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.99)
@@ -105,4 +105,4 @@ DEPENDENCIES
   validates_lengths_from_database!
 
 BUNDLED WITH
-   1.11.2
+   1.15.4
