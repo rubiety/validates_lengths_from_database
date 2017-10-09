@@ -1,3 +1,9 @@
+== v0.7.0 (2017-10-09)
+
+* Drop hard reliance on rails (can use with just activerecord) - thanks @grosser
+* Drop requiring of rubygems (unnecessary) - thanks @grosser
+* Update dependencies to modern, build-able versions
+
 == v0.6.0 (2017-05-02)
 
 * Drop support for integer length validations (too many issues)
