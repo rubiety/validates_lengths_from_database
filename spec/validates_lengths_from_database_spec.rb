@@ -238,6 +238,23 @@ describe ValidatesLengthsFromDatabase do
     end
   end
 
+  context "Model with validates_lengths_from_database :only => [:text_1], :limit => {:text => 10}" do
+    before do
+      class ArticleValidateOnlyText < ActiveRecord::Base
+        self.table_name = "articles_high_limit"
+        validates_lengths_from_database :only => [:text_1], :limit => {:text => 10}
+      end
+    end
+
+    context "an article with a length equal to max, but a bytesize greater than" do
+      before { @article = ArticleValidateOnlyText.new(:text_1 => "😎"*10); @article.valid? }
+
+      it "should not be valid" do
+        @article.should_not be_valid
+      end
+    end
+  end
+
   context "Model with validates_lengths_from_database :only => [:string_1, :text_1]" do
     before do
       class ArticleValidateOnly < ActiveRecord::Base
