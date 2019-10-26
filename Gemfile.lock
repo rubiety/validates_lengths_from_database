@@ -53,6 +53,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86_64-darwin-18
 
 DEPENDENCIES
   activesupport (>= 3)
@@ -67,4 +68,4 @@ DEPENDENCIES
   validates_lengths_from_database!
 
 BUNDLED WITH
-   1.15.4
+   1.17.3

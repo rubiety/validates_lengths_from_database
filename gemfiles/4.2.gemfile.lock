@@ -119,6 +119,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86_64-darwin-18
 
 DEPENDENCIES
   activesupport (>= 3)
@@ -126,7 +127,7 @@ DEPENDENCIES
   i18n
   iconv (~> 1.0.4)
   pg (~> 0.17.1)
-  rails (~> 4.2.0)
+  rails (~> 4.2)
   rake
   rdoc (~> 3.12)
   rspec (~> 2.0)
@@ -134,4 +135,4 @@ DEPENDENCIES
   validates_lengths_from_database!
 
 BUNDLED WITH
-   1.15.4
+   1.17.3
