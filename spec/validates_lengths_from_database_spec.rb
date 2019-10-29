@@ -222,7 +222,7 @@ describe ValidatesLengthsFromDatabase do
       end
     end
 
-    context "an article with overloaded attributes" do
+    context "an article with string_1 that is too many characters" do
       before { @article = ArticleValidateSpecificLimit.new(LONG_ATTRIBUTES); @article.valid? }
 
       it "should not be valid" do
@@ -233,6 +233,56 @@ describe ValidatesLengthsFromDatabase do
         @article.errors["string_1"].join.should =~ /too long/
         @article.errors["string_2"].join.should =~ /too long/
         @article.errors["text_1"].should_not be_present
+        @article.errors["decimal_1"].should_not be_present
+      end
+    end
+
+    context "an article with string_1 that is too many bytes, but few enough characters" do
+      before do
+        @article = ArticleValidateSpecificLimit.new(
+          LONG_ATTRIBUTES.merge(:string_1 => "😎😎😎😎", :string_2 => "👍👍👍👍")
+        )
+
+        @article.valid?
+      end
+
+      it "should be valid" do
+        @article.should be_valid
+      end
+    end
+
+    context "an article with text_1 that is too many characters" do
+      before do
+        @article = ArticleValidateSpecificLimit.new(LONG_ATTRIBUTES.merge(:text_1 => "a"*101))
+        @article.valid?
+      end
+
+      it "should not be valid" do
+        @article.should_not be_valid
+      end
+
+      it "should have errors on all string/text attributes" do
+        @article.errors["string_1"].join.should =~ /too long/
+        @article.errors["string_2"].join.should =~ /too long/
+        @article.errors["text_1"].join.should =~ /too long/
+        @article.errors["decimal_1"].should_not be_present
+      end
+    end
+
+    context "an article with text_1 that is too many bytes, but few enough characters" do
+      before do
+        @article = ArticleValidateSpecificLimit.new(LONG_ATTRIBUTES.merge(:text_1 => "👍"*99))
+        @article.valid?
+      end
+
+      it "should not be valid" do
+        @article.should_not be_valid
+      end
+
+      it "should have errors on all string/text attributes" do
+        @article.errors["string_1"].join.should =~ /too long/
+        @article.errors["string_2"].join.should =~ /too long/
+        @article.errors["text_1"].join.should =~ /too long/
         @article.errors["decimal_1"].should_not be_present
       end
     end
