@@ -4,6 +4,14 @@ module ValidatesLengthsFromDatabase
     base.send(:include, InstanceMethods)
   end
 
+  class UnicodeLengthValidator < ActiveModel::Validations::LengthValidator
+    def validate_each(record, attribute, value)
+      value_for_validation = value.is_a?(String) ? value.bytes : value
+
+      super(record, attribute, value_for_validation)
+    end
+  end
+
   module ClassMethods
     def validates_lengths_from_database(options = {})
       options.symbolize_keys!
@@ -54,9 +62,25 @@ module ValidatesLengthsFromDatabase
         next unless [:string, :text, :decimal].include?(column_schema.type)
         case column_schema.type
         when :string, :text
-          column_limit = options[:limit][column_schema.type] || column_schema.limit
-          if column_limit
-            ActiveModel::Validations::LengthValidator.new(:maximum => column_limit, :allow_blank => true, :attributes => [column]).validate(self)
+          if column_limit = options[:limit][column_schema.type] || column_schema.limit
+            validator =
+              if ActiveModel::Validations::LengthValidator::RESERVED_OPTIONS.include?(:tokenizer)
+                ActiveModel::Validations::LengthValidator.new(
+                  :allow_blank => true,
+                  :attributes => [column],
+                  :maximum => column_limit,
+                  :tokenizer => ->(string) { string.bytes }
+                )
+              else
+                UnicodeLengthValidator.new(
+                  :allow_blank => true,
+                  :attributes => [column],
+                  :maximum => column_limit,
+                  :too_long => "is too long (maximum is %{count} bytes)"
+                )
+              end
+
+            validator.validate(self)
           end
         when :decimal
           if column_schema.precision && column_schema.scale
