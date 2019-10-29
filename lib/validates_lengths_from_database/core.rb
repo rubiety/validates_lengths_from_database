@@ -4,7 +4,7 @@ module ValidatesLengthsFromDatabase
     base.send(:include, InstanceMethods)
   end
 
-  class UnicodeLengthValidator < ActiveModel::Validations::LengthValidator
+  class BytesizeValidator < ActiveModel::Validations::LengthValidator
     def validate_each(record, attribute, value)
       value_for_validation = value.is_a?(String) ? value.bytes : value
 
@@ -57,38 +57,67 @@ module ValidatesLengthsFromDatabase
 
       columns_to_validate.each do |column|
         column_schema = self.class.columns.find {|c| c.name == column }
+
         next if column_schema.nil?
         next if column_schema.respond_to?(:array) && column_schema.array
         next unless [:string, :text, :decimal].include?(column_schema.type)
-        case column_schema.type
-        when :string, :text
-          if column_limit = options[:limit][column_schema.type] || column_schema.limit
-            validator =
-              if ActiveModel::Validations::LengthValidator::RESERVED_OPTIONS.include?(:tokenizer)
-                ActiveModel::Validations::LengthValidator.new(
-                  :allow_blank => true,
-                  :attributes => [column],
-                  :maximum => column_limit,
-                  :tokenizer => ->(string) { string.bytes }
-                )
-              else
-                UnicodeLengthValidator.new(
-                  :allow_blank => true,
-                  :attributes => [column],
-                  :maximum => column_limit,
-                  :too_long => "is too long (maximum is %{count} bytes)"
-                )
-              end
 
-            validator.validate(self)
+        case column_schema.type
+        when :string
+          if column_limit = options[:limit][column_schema.type] || column_schema.limit
+            validate_length_by_characters(column, column_limit)
+          end
+        when :text
+          if column_limit = options[:limit][column_schema.type] || column_schema.limit
+            validate_length_by_bytesize(column, column_limit)
           end
         when :decimal
           if column_schema.precision && column_schema.scale
-            max_val = (10 ** column_schema.precision)/(10 ** column_schema.scale)
-            ActiveModel::Validations::NumericalityValidator.new(:less_than => max_val, :allow_blank => true, :attributes => [column]).validate(self)
+            validate_numericality_with_precision(column, column_schema)
           end
         end
       end
+    end
+
+    private
+
+    def validate_length_by_characters(column, column_limit)
+      ActiveModel::Validations::LengthValidator.new(
+        :allow_blank => true,
+        :attributes => [column],
+        :maximum => column_limit
+      ).validate(self)
+    end
+
+    def validate_length_by_bytesize(column, column_limit)
+      validator =
+        if ActiveModel::Validations::LengthValidator::RESERVED_OPTIONS.include?(:tokenizer)
+          ActiveModel::Validations::LengthValidator.new(
+            :allow_blank => true,
+            :attributes => [column],
+            :maximum => column_limit,
+            :tokenizer => ->(string) { string.bytes }
+          )
+        else
+          BytesizeValidator.new(
+            :allow_blank => true,
+            :attributes => [column],
+            :maximum => column_limit,
+            :too_long => "is too long (maximum is %{count} bytes)"
+          )
+        end
+
+      validator.validate(self)
+    end
+
+    def validate_numericality_with_precision(column, column_schema)
+      max_val = (10 ** column_schema.precision)/(10 ** column_schema.scale)
+
+      ActiveModel::Validations::NumericalityValidator.new(
+        :allow_blank => true,
+        :attributes => [column],
+        :less_than => max_val
+      ).validate(self)
     end
   end
 end
