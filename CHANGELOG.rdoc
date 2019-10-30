@@ -1,3 +1,8 @@
+== v0.8.0 (2019-10-30)
+
+* Enforce validation length on TEXT columns via bytes instead of characters (#25)
+* Drop support for ruby 1.9 (#26)
+
 == v0.7.0 (2017-10-09)
 
 * Drop hard reliance on rails (can use with just activerecord) - thanks @grosser
