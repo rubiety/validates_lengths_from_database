@@ -14,7 +14,6 @@ Gem::Specification.new do |s|
   s.files        = Dir["{lib,spec,rails}/**/*", "[A-Z]*", "init.rb"]
   s.require_path = "lib"
 
-  s.rubyforge_project = s.name
   s.required_rubygems_version = ">= 1.3.4"
   s.required_ruby_version = ">= 2.4"
 
