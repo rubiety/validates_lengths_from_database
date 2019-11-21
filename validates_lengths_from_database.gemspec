@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency("activerecord", [">= 4"])
   s.add_development_dependency("activesupport", [">= 4"])
   s.add_development_dependency("rspec", ["~> 2.0"])
-  s.add_development_dependency("sqlite3", ["~> 1.3.4"])
   s.add_development_dependency("appraisal", ["~> 2.0"])
   s.add_development_dependency("pg", ["~> 0.17.1"])
   s.add_development_dependency("rdoc", ["~> 3.12"])
