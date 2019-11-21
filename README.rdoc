@@ -1,6 +1,5 @@
-{<img src="https://secure.travis-ci.org/rubiety/validates_lengths_from_database.png?branch=master" alt="Build Status" />}[http://travis-ci.org/rubiety/validates_lengths_from_database]
-{<img src="https://gemnasium.com/rubiety/validates_lengths_from_database.png" alt="Dependency Status" />}[https://gemnasium.com/rubiety/validates_lengths_from_database]
-{<img src="https://codeclimate.com/github/rubiety/validates_lengths_from_database.png" />}[https://codeclimate.com/github/rubiety/validates_lengths_from_database]
+{<img src="https://travis-ci.org/rubiety/validates_lengths_from_database.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/rubiety/validates_lengths_from_database]
+{<img src="https://api.codeclimate.com/v1/badges/db62821be2ed655656aa/maintainability" />}[https://codeclimate.com/github/rubiety/validates_lengths_from_database/maintainability]
 
 == Validates Lengths from Database
 
