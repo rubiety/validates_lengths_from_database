@@ -5,3 +5,7 @@
 Manifest
 pkg
 .bundle
+
+# Appraisal
+# https://github.com/thoughtbot/appraisal#version-control
+gemfiles/*.lock
