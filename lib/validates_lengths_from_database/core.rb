@@ -56,7 +56,7 @@ module ValidatesLengthsFromDatabase
       end
 
       columns_to_validate.each do |column|
-        column_schema = self.class.columns.find {|c| c.name == column }
+        column_schema = self.class.columns_hash[column]
 
         next if column_schema.nil?
         next if column_schema.respond_to?(:array) && column_schema.array
