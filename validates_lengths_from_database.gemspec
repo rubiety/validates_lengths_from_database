@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
 
   # rspec 2 relies rake < 11 for the `last_comment` method
   # https://stackoverflow.com/a/35893625
-  s.add_development_dependency("rake", ["< 11"])
+  s.add_development_dependency("rake", "< 14")
 
   # I'm not sure why this isn't installed along with activesupport,
   # but for whatever reason running `bundle install` doesn't install
