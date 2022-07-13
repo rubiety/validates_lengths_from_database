@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = "http://github.com/rubiety/validates_lengths_from_database"
   s.summary     = "Automatic maximum-length validations."
   s.description = "Introspects your database string field maximum lengths and automatically defines length validations."
+  s.license     = "MIT"
 
   s.files        = Dir["{lib,spec,rails}/**/*", "[A-Z]*", "init.rb"]
   s.require_path = "lib"
