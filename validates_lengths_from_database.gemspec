@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency("rspec", ["~> 2.0"])
   s.add_development_dependency("appraisal", ["~> 2.0"])
   s.add_development_dependency("pg", ["~> 0.17.1"])
-  s.add_development_dependency("rdoc", ["~> 3.12"])
+  s.add_development_dependency("rdoc", "~> 6.3")
 
   # rspec 2 relies rake < 11 for the `last_comment` method
   # https://stackoverflow.com/a/35893625
